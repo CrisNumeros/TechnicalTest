@@ -1,0 +1,68 @@
+﻿@model TechnicalTest.Models.Product
+
+@{
+    bool isEditing = ViewBag.IsEditing;
+    if (isEditing)
+    {
+        ViewBag.Title = "Edit";
+    }
+    else
+    {
+        ViewBag.Title = "Create";
+    }
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-content">
+    @if (isEditing)
+    {
+        <h2>Edit the product</h2>
+    }
+    else
+    {
+        <h2>Create a new product</h2>
+    }
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-div">
+        @Html.LabelFor(model => model.Name)
+        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { placeholder = "Product name..." } })
+        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-div">
+        @Html.LabelFor(model => model.Description)
+        @Html.EditorFor(model => model.Description, new { htmlAttributes = new { placeholder = "Product description..." } })
+        @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-div">
+        @Html.LabelFor(model => model.Category)
+        @Html.DropDownList("IdCategory", (List<SelectListItem>)ViewBag.Categories)
+    </div>
+
+
+    <div class="form-div">
+        @if (isEditing)
+        {
+            <input type="submit" value="Edit product" class="btn btn-success" />
+        }
+        else
+        {
+            <input type="submit" value="Create product" class="btn btn-success" />
+        }
+    </div>
+
+    <div class="form-div">
+        @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-warning" })
+    </div>
+</div>
+}
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

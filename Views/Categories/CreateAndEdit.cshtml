@@ -1,0 +1,54 @@
+﻿@model TechnicalTest.Models.Category
+
+@{
+    bool isEditing = ViewBag.IsEditing;
+    ViewBag.Title = "Create";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-content">
+    @if (isEditing)
+    {
+        <h2>Edit the category</h2>
+    }
+    else
+    {
+        <h2>Create a new category</h2>
+    }
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-div">
+        @Html.LabelFor(model => model.Name)
+        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { placeholder = "Category name..." } })
+        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-div">
+        @Html.LabelFor(model => model.Description)
+        @Html.EditorFor(model => model.Description, new { htmlAttributes = new { placeholder = "Category description..." } })
+        @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-div">
+        @if (isEditing)
+        {
+            <input type="submit" value="Edit category" class="btn btn-success" />
+        }
+        else
+        {
+            <input type="submit" value="Create category" class="btn btn-success" />
+        }
+    </div>
+
+    <div class="form-div">
+        @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-warning" })
+    </div>
+</div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
