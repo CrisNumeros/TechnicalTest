@@ -2,6 +2,7 @@
 
 @{
     bool isEditing = ViewBag.IsEditing;
+    string actionName = isEditing ? "Edit" : "Create";
     if (isEditing)
     {
         ViewBag.Title = "Edit";
@@ -12,7 +13,7 @@
     }
 }
 
-@using (Html.BeginForm())
+@using (Html.BeginForm(actionName, "Products", FormMethod.Post, new { autocomplete = "off" }))
 {
     @Html.AntiForgeryToken()
 
@@ -28,18 +29,18 @@
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <div class="form-div">
-        @Html.LabelFor(model => model.Name)
-        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { placeholder = "Product name..." } })
+        @Html.LabelFor(model => model.Name)*
+        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { placeholder = "Product name...", autocomplete = "off" } })
         @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
     </div>
     <div class="form-div">
-        @Html.LabelFor(model => model.Description)
+        @Html.LabelFor(model => model.Description)*
         @Html.EditorFor(model => model.Description, new { htmlAttributes = new { placeholder = "Product description..." } })
         @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
     </div>
 
     <div class="form-div">
-        @Html.LabelFor(model => model.Category)
+        @Html.LabelFor(model => model.Category)*
         @Html.DropDownList("IdCategory", (List<SelectListItem>)ViewBag.Categories)
     </div>
 

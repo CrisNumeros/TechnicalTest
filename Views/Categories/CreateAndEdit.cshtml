@@ -2,10 +2,11 @@
 
 @{
     bool isEditing = ViewBag.IsEditing;
+    string actionName = isEditing ? "Edit" : "Create";
     ViewBag.Title = "Create";
 }
 
-@using (Html.BeginForm())
+@using (Html.BeginForm(actionName, "Categories", FormMethod.Post, new { autocomplete = "off" }))
 {
     @Html.AntiForgeryToken()
 
@@ -21,8 +22,8 @@
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <div class="form-div">
-        @Html.LabelFor(model => model.Name)
-        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { placeholder = "Category name..." } })
+        @Html.LabelFor(model => model.Name)*
+        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { placeholder = "Category name...", autocomplete = "off" } })
         @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
     </div>
 
