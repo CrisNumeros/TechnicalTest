@@ -61,17 +61,17 @@ namespace TechnicalTest.Controllers
         {
             try
             {
-                if (ModelState.IsValid)
-                {
-                    _repo.Add(product);
-                }
+                if (!ModelState.IsValid)
+                    throw new Exception("ModelState not valid.");
+
+                _repo.Add(product);
                 return RedirectToAction("Index");
             }
             catch
             {
                 ViewBag.IsEditing = false;
                 ViewBag.Categories = ProductsRepository.GetCategoriesDropdownList();
-                return View("CreateAndEdit");
+                return View("CreateAndEdit", product);
             }
         }
 
@@ -106,17 +106,17 @@ namespace TechnicalTest.Controllers
         {
             try
             {
-                if (ModelState.IsValid)
-                {
-                    _repo.Edit(product);
-                }
+                if (!ModelState.IsValid)
+                    throw new Exception("ModelState not valid.");
+                
+                _repo.Edit(product);
                 return RedirectToAction("Index");
             }
             catch
             {
                 ViewBag.IsEditing = true;
                 ViewBag.Categories = ProductsRepository.GetCategoriesDropdownList();
-                return View("CreateAndEdit");
+                return View("CreateAndEdit", product);
             }
         }
 
@@ -126,13 +126,19 @@ namespace TechnicalTest.Controllers
         {
             try
             {
+                Product product = _repo.Get(id, false);
+                if (product == null)
+                {
+                    return HttpNotFound();
+                }
+
                 _repo.Delete(id);
-                return RedirectToAction("Index");
             }
             catch
             {
-                return View();
+
             }
+            return RedirectToAction("Index");
         }
     }
 }

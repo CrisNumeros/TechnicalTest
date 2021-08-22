@@ -14,10 +14,12 @@ namespace TechnicalTest.Models
 
         [Required(ErrorMessage = "The property \"{0}\" is required.")]
         [Display(Name = "Product name")]
+        [StringLength(60, ErrorMessage = "The property \"{0}\" cannot have more than {1} characters.")]
         public string Name { get; set; }
         
         [Required(ErrorMessage = "The property \"{0}\" is required.")]
         [Display(Name = "Product description")]
+        [StringLength(210, ErrorMessage = "The property \"{0}\" cannot have more than {1} characters.")]
         [DataType(DataType.MultilineText)]
         public string Description { get; set; }
 

@@ -52,13 +52,19 @@ namespace TechnicalTest.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Name,Description")] Category category)
         {
-            if (ModelState.IsValid)
+            try
             {
+                if (!ModelState.IsValid)
+                    throw new Exception("ModelState not valid.");
+
                 _repo.Add(category);
                 return RedirectToAction("Index");
             }
-            ViewBag.IsEditing = false;
-            return View("CreateAndEdit",category);
+            catch
+            {
+                ViewBag.IsEditing = false;
+                return View("CreateAndEdit", category);
+            }
         }
 
         // GET: Categories/Edit/5
@@ -74,7 +80,7 @@ namespace TechnicalTest.Controllers
                 return HttpNotFound();
             }
             ViewBag.IsEditing = true;
-            return View("CreateAndEdit",category);
+            return View("CreateAndEdit", category);
         }
 
         // POST: Categories/Edit/5
@@ -82,13 +88,19 @@ namespace TechnicalTest.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Name,Description")] Category category)
         {
-            if (ModelState.IsValid)
+            try
             {
+                if (!ModelState.IsValid)
+                    throw new Exception("ModelState not valid.");
+
                 _repo.Edit(category);
                 return RedirectToAction("Index");
             }
-            ViewBag.IsEditing = true;
-            return View("CreateAndEdit",category);
+            catch
+            {
+                ViewBag.IsEditing = true;
+                return View("CreateAndEdit", category);
+            }
         }
 
         // POST: Categories/Delete/5
@@ -113,13 +125,12 @@ namespace TechnicalTest.Controllers
                     TempData["Alert"] = Alert.ForeignKey;
                     TempData["AlertContent"] = category.Name;
                 }
-
-                return RedirectToAction("Index");
             }
             catch
             {
-                return View();
-            }   
+
+            }
+            return RedirectToAction("Index");
         }
     }
 }
