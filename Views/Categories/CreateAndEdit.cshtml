@@ -6,50 +6,51 @@
     ViewBag.Title = "Create";
 }
 
-@using (Html.BeginForm(actionName, "Categories", FormMethod.Post, new { autocomplete = "off" }))
+@using (Html.BeginForm(actionName, "Categories", FormMethod.Post, new { autocomplete = "off", id = "form-id" }))
 {
     @Html.AntiForgeryToken()
 
-<div class="form-content">
-    @if (isEditing)
-    {
-        <h2>Edit the category</h2>
-    }
-    else
-    {
-        <h2>Create a new category</h2>
-    }
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    <div class="form-div">
-        @Html.LabelFor(model => model.Name)*
-        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { placeholder = "Category name...", autocomplete = "off" } })
-        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
-    </div>
-
-    <div class="form-div">
-        @Html.LabelFor(model => model.Description)
-        @Html.EditorFor(model => model.Description, new { htmlAttributes = new { placeholder = "Category description..." } })
-        @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
-    </div>
-
-    <div class="form-div">
+    <div class="form-content">
         @if (isEditing)
         {
-            <input type="submit" value="Edit category" class="btn btn-success" />
+            <h2>Edit the category</h2>
         }
         else
         {
-            <input type="submit" value="Create category" class="btn btn-success" />
+            <h2>Create a new category</h2>
         }
-    </div>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-div">
+            @Html.LabelFor(model => model.Name)*
+            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { placeholder = "Category name...", autocomplete = "off" } })
+            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+        </div>
 
-    <div class="form-div">
-        @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-warning" })
+        <div class="form-div">
+            @Html.LabelFor(model => model.Description)
+            @Html.EditorFor(model => model.Description, new { htmlAttributes = new { placeholder = "Category description..." } })
+            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-div">
+            @if (isEditing)
+            {
+                <input type="submit" value="Edit category" class="btn btn-success" id="submit-button" />
+            }
+            else
+            {
+                <input type="submit" value="Create category" class="btn btn-success" id="submit-button" />
+            }
+        </div>
+
+        <div class="form-div">
+            @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-warning" })
+        </div>
     </div>
-</div>
 }
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/technicaltest.js" type="text/javascript"></script>
 }

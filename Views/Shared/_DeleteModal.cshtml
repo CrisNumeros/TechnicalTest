@@ -10,11 +10,12 @@
                 Are you sure you want to delete this?
             </div>
             <div class="modal-footer">
-                @using (Html.BeginForm("Delete", (string)@ViewBag.Controller))
+                @using (Html.BeginForm("Delete", (string)@ViewBag.Controller, FormMethod.Post, new { id = "form-id" }))
                 {
                     @Html.AntiForgeryToken()
+
                     <input class="delete-input-value" id="id" name="id" hidden value="-1" />
-                    <button type="submit" class="btn btn-danger">Delete</button>
+                    <button type="submit" class="btn btn-danger" id="submit-button">Delete</button>
                     <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Cancel</button>
                 }
             </div>
